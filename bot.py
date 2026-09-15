@@ -141,6 +141,7 @@ def teclado():
         ],
         [
             InlineKeyboardButton("🎲 RETO", callback_data="reto"),
+            InlineKeyboardButton("🎲 DADO", callback_data="dado")
         ],
     ])
 
