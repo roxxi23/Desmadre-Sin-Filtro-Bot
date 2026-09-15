@@ -191,10 +191,9 @@ async def hot(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def botones(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
-
-   if query.data == "pregunta":
+    if query.data == "pregunta":
         texto = f"❓ *PREGUNTA*\n\n{random.choice(PREGUNTAS)}"
-   elif query.data == "dado":
+     elif query.data == "dado":
         numero = random.randint(1, 6)
         texto = f"🎲 *DADO DEL DESMADRE* 🎲\n\nSalió el número: *{numero}* 😈"
    elif query.data == "reto":
