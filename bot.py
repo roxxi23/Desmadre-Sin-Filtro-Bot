@@ -131,6 +131,7 @@ RETOS = [
     "📸 Manda una foto usando algo rojo.",
     "🔥 Haz tu mejor pose y manda una selfie.",
     "💬 Escribe una frase coqueta sin mencionar a nadie.",
+]
 YO_NUNCA = [
     "🙈 Yo nunca he tenido sexo en un baño público.",
     "🙈 Yo nunca he chupado después de que se corrieran.",
