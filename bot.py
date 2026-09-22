@@ -330,6 +330,7 @@ def main():
     app.add_handler(CommandHandler("hot", hot))
     app.add_handler(CommandHandler("yo_nunca", yo_nunca))
     app.add_handler(CommandHandler("mas_probable", mas_probable))   app.add_handler(CallbackQueryHandler(botones))
+    app.add_handler(CommandHandler("dado", dado))
     app.add_handler(CallbackQueryHandler(botones))
     print("🔥 Desmadre Sin Filtro está funcionando...")
     app.run_polling()
