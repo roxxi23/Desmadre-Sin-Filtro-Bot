@@ -224,7 +224,22 @@ async def hot(update: Update, context: ContextTypes.DEFAULT_TYPE):
         parse_mode="Markdown",
         reply_markup=teclado()
     )
+async def yo_nunca(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    texto = f"🙈 *YO NUNCA*\n\n{random.choice(YO_NUNCA)}"
+    await update.message.reply_text(
+        texto,
+        parse_mode="Markdown",
+        reply_markup=teclado()
+    )
 
+
+async def mas_probable(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    texto = f"👀 *MÁS PROBABLE*\n\n{random.choice(MAS_PROBABLE)}"
+    await update.message.reply_text(
+        texto,
+        parse_mode="Markdown",
+        reply_markup=teclado()
+    )
 async def botones(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
