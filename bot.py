@@ -240,6 +240,33 @@ async def mas_probable(update: Update, context: ContextTypes.DEFAULT_TYPE):
         parse_mode="Markdown",
         reply_markup=teclado()
     )
+    async def dado(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    resultado = await update.message.reply_dice(emoji="🎲")
+    numero = resultado.dice.value
+
+    if numero == 1:
+        texto = f"🎲 Salió {numero}\n\n❓ *VERDAD*\n\n{random.choice(PREGUNTAS)}"
+
+    elif numero == 2:
+        texto = f"🎲 Salió {numero}\n\n🔥 *RETO*\n\n{random.choice(RETOS)}"
+
+    elif numero == 3:
+        texto = f"🎲 Salió {numero}\n\n🙈 *YO NUNCA*\n\n{random.choice(YO_NUNCA)}"
+
+    elif numero == 4:
+        texto = f"🎲 Salió {numero}\n\n👀 *MÁS PROBABLE*\n\n{random.choice(MAS_PROBABLE)}"
+
+    elif numero == 5:
+        texto = f"🎲 Salió {numero}\n\n🔥 *RETO*\n\n{random.choice(RETOS)}"
+
+    else:
+        texto = f"🎲 Salió {numero}\n\n❓ *VERDAD*\n\n{random.choice(PREGUNTAS)}"
+
+    await update.message.reply_text(
+        texto,
+        parse_mode="Markdown",
+        reply_markup=teclado()
+    )
 async def botones(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
