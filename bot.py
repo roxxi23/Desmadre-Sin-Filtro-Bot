@@ -175,10 +175,13 @@ def teclado():
         ],
         [
             InlineKeyboardButton("🎲 RETO", callback_data="reto"),
-            InlineKeyboardButton("🎲 DADO", callback_data="dado")
+            InlineKeyboardButton("🎲 DADO", callback_data="dado"),
+        ],
+        [
+            InlineKeyboardButton("🙈 YO NUNCA", callback_data="yo_nunca"),
+            InlineKeyboardButton("👀 MÁS PROBABLE", callback_data="mas_probable"),
         ],
     ])
-
 async def inicio(update: Update, context: ContextTypes.DEFAULT_TYPE):
     texto = (
         "🔥😈 *DESMADRE SIN FILTRO* 😈🔥\n\n"
