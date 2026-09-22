@@ -131,6 +131,40 @@ RETOS = [
     "📸 Manda una foto usando algo rojo.",
     "🔥 Haz tu mejor pose y manda una selfie.",
     "💬 Escribe una frase coqueta sin mencionar a nadie.",
+]YO_NUNCA = [
+    "🙈 Yo nunca he tenido sexo en un baño público.",
+    "🙈 Yo nunca he chupado después de que se corrieran.",
+    "🙈 Yo nunca he tenido sexo con más de una persona el mismo día.",
+    "🙈 Yo nunca he usado un juguete sexual en público.",
+    "🙈 Yo nunca he fantaseado con un profesor/a o jefe/a.",
+    "🙈 Yo nunca he tenido sexo mientras me grababan.",
+    "🙈 Yo nunca he tragado.",
+    "🙈 Yo nunca he tenido un orgasmo solo con palabras.",
+    "🙈 Yo nunca he hecho un trío.",
+    "🙈 Yo nunca he tenido sexo en la casa de mis padres.",
+    "🙈 Yo nunca he pedido que me den por el culo.",
+    "🙈 Yo nunca he tenido sexo con alguien del mismo sexo.",
+    "🙈 Yo nunca he usado comida en la cama.",
+    "🙈 Yo nunca he tenido sexo en un ascensor o escaleras.",
+    "🙈 Yo nunca he fingido un orgasmo.",
+    "🙈 Yo nunca he tenido sexo en el trabajo o universidad.",
+    "🙈 Yo nunca he chupado pies.",
+    "🙈 Yo nunca he tenido un orgasmo anal.",
+    "🙈 Yo nunca he hecho sexting con alguien casado/a.",
+    "🙈 Yo nunca he tenido sexo en la playa.",
+]
+
+MAS_PROBABLE = [
+    "👀 ¿Quién es más probable que se corra solo con dirty talk?",
+    "👀 ¿Quién es más probable que acepte un trío?",
+    "👀 ¿Quién es más probable que lo haga en un lugar público?",
+    "👀 ¿Quién es más probable que tenga un fetiche raro?",
+    "👀 ¿Quién es más probable que pida que le den más duro?",
+    "👀 ¿Quién es más probable que se grabe teniendo sexo?",
+    "👀 ¿Quién es más probable que le guste el dolor?",
+    "👀 ¿Quién es más probable que se corra en la cara del otro?",
+    "👀 ¿Quién es más probable que tenga sexo con un desconocido?",
+    "👀 ¿Quién es más probable que quiera ser dominado/a?",
 ]
 
 def teclado():
@@ -195,8 +229,26 @@ async def botones(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if query.data == "pregunta":
         texto = f"❓ *PREGUNTA*\n\n{random.choice(PREGUNTAS)}"
     elif query.data == "dado":
-        numero = random.randint(1, 6)
-        texto = f"🎲 *DADO DEL DESMADRE* 🎲\n\nSalió el número: {numero}"
+    resultado = await query.message.reply_dice(emoji="🎲")
+    numero = resultado.dice.value
+
+    if numero == 1:
+        texto = f"🎲 Salió {numero}\n\n❓ *VERDAD*\n\n{random.choice(PREGUNTAS)}"
+
+    elif numero == 2:
+        texto = f"🎲 Salió {numero}\n\n🔥 *RETO*\n\n{random.choice(RETOS)}"
+
+    elif numero == 3:
+        texto = f"🎲 Salió {numero}\n\n🙈 *YO NUNCA*\n\n{random.choice(YO_NUNCA)}"
+
+    elif numero == 4:
+        texto = f"🎲 Salió {numero}\n\n👀 *MÁS PROBABLE*\n\n{random.choice(MAS_PROBABLE)}"
+
+    elif numero == 5:
+        texto = f"🎲 Salió {numero}\n\n🔥 *RETO*\n\n{random.choice(RETOS)}"
+
+    else:
+        texto = f"🎲 Salió {numero}\n\n❓ *VERDAD*\n\n{random.choice(PREGUNTAS)}"
     elif query.data == "reto":
         texto = (
             "🎲 *RETO DEL DESMADRE* 🎲\n\n"
