@@ -1,5 +1,6 @@
 import os
 import random
+
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
     Application,
@@ -7,6 +8,7 @@ from telegram.ext import (
     CallbackQueryHandler,
     ContextTypes,
 )
+
 
 PREGUNTAS = [
     "¿Cuál es tu apodo más vergonzoso?",
@@ -80,6 +82,7 @@ PREGUNTAS = [
     "¿Quién del grupo tiene la mejor personalidad?",
 ]
 
+
 RETOS = [
     "📸 Sube una foto de tus piernas.",
     "💋 Manda un GIF o video tirando un beso.",
@@ -132,6 +135,8 @@ RETOS = [
     "🔥 Haz tu mejor pose y manda una selfie.",
     "💬 Escribe una frase coqueta sin mencionar a nadie.",
 ]
+
+
 YO_NUNCA = [
     "🙈 Yo nunca he tenido sexo en un baño público.",
     "🙈 Yo nunca he chupado después de que se corrieran.",
@@ -155,6 +160,7 @@ YO_NUNCA = [
     "🙈 Yo nunca he tenido sexo en la playa.",
 ]
 
+
 MAS_PROBABLE = [
     "👀 ¿Quién es más probable que se corra solo con dirty talk?",
     "👀 ¿Quién es más probable que acepte un trío?",
@@ -167,6 +173,7 @@ MAS_PROBABLE = [
     "👀 ¿Quién es más probable que tenga sexo con un desconocido?",
     "👀 ¿Quién es más probable que quiera ser dominado/a?",
 ]
+
 
 def teclado():
     return InlineKeyboardMarkup([
@@ -183,28 +190,56 @@ def teclado():
             InlineKeyboardButton("👀 MÁS PROBABLE", callback_data="mas_probable"),
         ],
     ])
+
+
+def texto_dado(numero):
+    if numero == 1:
+        return f"🎲 Salió {numero}\n\n❓ *VERDAD*\n\n{random.choice(PREGUNTAS)}"
+
+    if numero == 2:
+        return f"🎲 Salió {numero}\n\n🔥 *RETO*\n\n{random.choice(RETOS)}"
+
+    if numero == 3:
+        return f"🎲 Salió {numero}\n\n🙈 *YO NUNCA*\n\n{random.choice(YO_NUNCA)}"
+
+    if numero == 4:
+        return f"🎲 Salió {numero}\n\n👀 *MÁS PROBABLE*\n\n{random.choice(MAS_PROBABLE)}"
+
+    if numero == 5:
+        return f"🎲 Salió {numero}\n\n🔥 *RETO*\n\n{random.choice(RETOS)}"
+
+    return f"🎲 Salió {numero}\n\n❓ *VERDAD*\n\n{random.choice(PREGUNTAS)}"
+
+
 async def inicio(update: Update, context: ContextTypes.DEFAULT_TYPE):
     texto = (
         "🔥😈 *DESMADRE SIN FILTRO* 😈🔥\n\n"
         "Bienvenido al bot oficial del desmadre.\n\n"
         "❓ Preguntas\n"
         "🔥 Preguntas HOT\n"
-        "🎲 Retos\n\n"
+        "🎲 Retos\n"
+        "🎲 Dado\n"
+        "🙈 Yo nunca\n"
+        "👀 Más probable\n\n"
         "¿Qué querés hacer?"
     )
+
     await update.message.reply_text(
         texto,
         parse_mode="Markdown",
         reply_markup=teclado()
     )
 
+
 async def pregunta(update: Update, context: ContextTypes.DEFAULT_TYPE):
     texto = f"❓ *PREGUNTA*\n\n{random.choice(PREGUNTAS)}"
+
     await update.message.reply_text(
         texto,
         parse_mode="Markdown",
         reply_markup=teclado()
     )
+
 
 async def reto(update: Update, context: ContextTypes.DEFAULT_TYPE):
     texto = (
@@ -212,21 +247,27 @@ async def reto(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"{random.choice(RETOS)}\n\n"
         "🚫 Si no querés hacerlo, simplemente PASÁ."
     )
+
     await update.message.reply_text(
         texto,
         parse_mode="Markdown",
         reply_markup=teclado()
     )
 
+
 async def hot(update: Update, context: ContextTypes.DEFAULT_TYPE):
     texto = f"🔥 *PREGUNTA HOT* 🔥\n\n{random.choice(PREGUNTAS[49:])}"
+
     await update.message.reply_text(
         texto,
         parse_mode="Markdown",
         reply_markup=teclado()
     )
+
+
 async def yo_nunca(update: Update, context: ContextTypes.DEFAULT_TYPE):
     texto = f"🙈 *YO NUNCA*\n\n{random.choice(YO_NUNCA)}"
+
     await update.message.reply_text(
         texto,
         parse_mode="Markdown",
@@ -236,44 +277,41 @@ async def yo_nunca(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def mas_probable(update: Update, context: ContextTypes.DEFAULT_TYPE):
     texto = f"👀 *MÁS PROBABLE*\n\n{random.choice(MAS_PROBABLE)}"
+
     await update.message.reply_text(
         texto,
         parse_mode="Markdown",
         reply_markup=teclado()
     )
-    async def dado(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+
+async def dado(update: Update, context: ContextTypes.DEFAULT_TYPE):
     resultado = await update.message.reply_dice(emoji="🎲")
     numero = resultado.dice.value
 
-    if numero == 1:
-        texto = f"🎲 Salió {numero}\n\n❓ *VERDAD*\n\n{random.choice(PREGUNTAS)}"
-
-    elif numero == 2:
-        texto = f"🎲 Salió {numero}\n\n🔥 *RETO*\n\n{random.choice(RETOS)}"
-
-    elif numero == 3:
-        texto = f"🎲 Salió {numero}\n\n🙈 *YO NUNCA*\n\n{random.choice(YO_NUNCA)}"
-
-    elif numero == 4:
-        texto = f"🎲 Salió {numero}\n\n👀 *MÁS PROBABLE*\n\n{random.choice(MAS_PROBABLE)}"
-
-    elif numero == 5:
-        texto = f"🎲 Salió {numero}\n\n🔥 *RETO*\n\n{random.choice(RETOS)}"
-
-    else:
-        texto = f"🎲 Salió {numero}\n\n❓ *VERDAD*\n\n{random.choice(PREGUNTAS)}"
-
     await update.message.reply_text(
-        texto,
+        texto_dado(numero),
         parse_mode="Markdown",
         reply_markup=teclado()
     )
+
+
 async def botones(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
 
-        if query.data == "pregunta":
+    if query.data == "pregunta":
         texto = f"❓ *PREGUNTA*\n\n{random.choice(PREGUNTAS)}"
+
+    elif query.data == "hot":
+        texto = f"🔥 *PREGUNTA HOT* 🔥\n\n{random.choice(PREGUNTAS[49:])}"
+
+    elif query.data == "reto":
+        texto = (
+            "🎲 *RETO DEL DESMADRE* 🎲\n\n"
+            f"{random.choice(RETOS)}\n\n"
+            "🚫 Si no querés hacerlo, simplemente PASÁ."
+        )
 
     elif query.data == "yo_nunca":
         texto = f"🙈 *YO NUNCA*\n\n{random.choice(YO_NUNCA)}"
@@ -284,38 +322,17 @@ async def botones(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif query.data == "dado":
         resultado = await query.message.reply_dice(emoji="🎲")
         numero = resultado.dice.value
-
-    if numero == 1:
-        texto = f"🎲 Salió {numero}\n\n❓ *VERDAD*\n\n{random.choice(PREGUNTAS)}"
-
-    elif numero == 2:
-        texto = f"🎲 Salió {numero}\n\n🔥 *RETO*\n\n{random.choice(RETOS)}"
-
-    elif numero == 3:
-        texto = f"🎲 Salió {numero}\n\n🙈 *YO NUNCA*\n\n{random.choice(YO_NUNCA)}"
-
-    elif numero == 4:
-        texto = f"🎲 Salió {numero}\n\n👀 *MÁS PROBABLE*\n\n{random.choice(MAS_PROBABLE)}"
-
-    elif numero == 5:
-        texto = f"🎲 Salió {numero}\n\n🔥 *RETO*\n\n{random.choice(RETOS)}"
+        texto = texto_dado(numero)
 
     else:
-        texto = f"🎲 Salió {numero}\n\n❓ *VERDAD*\n\n{random.choice(PREGUNTAS)}"
-    elif query.data == "reto":
-        texto = (
-            "🎲 *RETO DEL DESMADRE* 🎲\n\n"
-            f"{random.choice(RETOS)}\n\n"
-            "🚫 Si no querés hacerlo, simplemente PASÁ."
-        )
-    else:
-        texto = f"🔥 *PREGUNTA HOT* 🔥\n\n{random.choice(PREGUNTAS[49:])}"
+        return
 
     await query.edit_message_text(
         texto,
         parse_mode="Markdown",
         reply_markup=teclado()
     )
+
 
 def main():
     token = os.environ.get("BOT_TOKEN")
@@ -329,12 +346,16 @@ def main():
     app.add_handler(CommandHandler("pregunta", pregunta))
     app.add_handler(CommandHandler("reto", reto))
     app.add_handler(CommandHandler("hot", hot))
-    app.add_handler(CommandHandler("yo_nunca", yo_nunca))
-    app.add_handler(CommandHandler("mas_probable", mas_probable))   app.add_handler(CallbackQueryHandler(botones))
     app.add_handler(CommandHandler("dado", dado))
+    app.add_handler(CommandHandler("yo_nunca", yo_nunca))
+    app.add_handler(CommandHandler("mas_probable", mas_probable))
+
     app.add_handler(CallbackQueryHandler(botones))
+
     print("🔥 Desmadre Sin Filtro está funcionando...")
+
     app.run_polling()
+
 
 if __name__ == "__main__":
     main()
